@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#070709">
+    <title>RANA JI · Official Telegram</title>
+
+    <style>
+        :root {
+            --bg-base: #060509;
+            --gold-light: #fff5c0;
+            --gold-mid: #e5b338;
+            --gold-dark: #8c5b00;
+            --gold-glow: rgba(229, 179, 56, 0.45);
+            --ink: #0d0814;
+            --text-light: #f5f3ff;
+            --text-muted: #8b8398;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            min-height: 100vh;
+            background: var(--bg-base);
+            color: var(--text-light);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .ambient-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: 
+                radial-gradient(circle at 50% 32%, rgba(229, 179, 56, 0.18) 0%, rgba(112, 0, 255, 0.12) 45%, transparent 75%),
+                radial-gradient(circle at 50% 90%, #000 0%, transparent 100%);
+            z-index: 1;
+        }
+
+        .page-card {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 400px;
+            background: linear-gradient(155deg, rgba(22, 18, 30, 0.92) 0%, rgba(10, 8, 16, 0.98) 100%);
+            border: 1px solid rgba(229, 179, 56, 0.28);
+            border-radius: 36px;
+            padding: 38px 24px 28px;
+            text-align: center;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), 0 0 45px rgba(229, 179, 56, 0.12);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            margin: 20px 0;
+        }
+
+        .diamond-wrap {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 24px auto;
+        }
+
+        .diamond-frame {
+            width: 100%;
+            height: 100%;
+            border-radius: 30px;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold-mid) 40%, var(--gold-dark) 85%, var(--gold-light));
+            padding: 3.5px;
+            box-shadow: 0 0 35px var(--gold-glow);
+            transform: rotate(45deg);
+        }
+
+        .diamond-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 26px;
+            overflow: hidden;
+            background: #ffffff;
+        }
+
+        .avatar-img {
+            width: 142%;
+            height: 142%;
+            object-fit: contain;
+            margin-top: -21%;
+            margin-left: -21%;
+            transform: rotate(-45deg);
+            display: block;
+        }
+
+        .verified-badge {
+            position: absolute;
+            bottom: -4px;
+            right: 6px;
+            width: 28px;
+            height: 28px;
+            background: #0088cc;
+            border-radius: 50%;
+            border: 3px solid #140d1f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 12px rgba(0, 136, 204, 0.8);
+            z-index: 4;
+        }
+        .verified-badge svg { width: 14px; height: 14px; fill: #fff; }
+
+        .crown-tag {
+            font-size: 20px;
+            color: var(--gold-mid);
+            margin-bottom: 2px;
+            text-shadow: 0 0 10px rgba(229, 179, 56, 0.5);
+        }
+
+        .channel-name {
+            font-size: 30px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0 0 6px 0;
+            background: linear-gradient(180deg, #ffffff 30%, var(--gold-mid) 75%, var(--gold-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+
+        .sub-counter {
+            font-size: 13px;
+            color: var(--gold-light);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 22px;
+            opacity: 0.85;
+        }
+
+        .features-box {
+            background: rgba(12, 9, 18, 0.7);
+            border: 1px solid rgba(229, 179, 56, 0.18);
+            border-left: 4px solid var(--gold-mid);
+            border-radius: 18px;
+            padding: 18px 16px;
+            text-align: left;
+            margin-bottom: 26px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: #f1edfa;
+            margin-bottom: 10px;
+        }
+        .feature-item:last-child { margin-bottom: 0; }
+
+        .feature-item span {
+            color: var(--gold-mid);
+            margin-right: 10px;
+            font-size: 15px;
+            text-shadow: 0 0 8px rgba(229, 179, 56, 0.6);
+        }
+
+        .cta-wrap {
+            position: relative;
+            width: 100%;
+        }
+
+        .cta-btn {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 12px !important;
+            width: 100% !important;
+            padding: 18px 10px !important;
+            border-radius: 50px !important;
+            border: none !important;
+            cursor: pointer;
+            text-decoration: none !important;
+            background: linear-gradient(180deg, #ffffff 0%, #fff5c0 25%, #e5b338 70%, #b87b00 100%) !important;
+            box-shadow: 0 12px 30px rgba(229, 179, 56, 0.35), inset 0 2px 4px rgba(255, 255, 255, 0.9) !important;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.1s ease;
+        }
+
+        .cta-btn:active {
+            transform: scale(0.97);
+        }
+
+        .cta-btn-text {
+            color: #0b0614 !important;
+            font-size: 20px !important;
+            font-weight: 950 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+            display: inline-block !important;
+            line-height: 1 !important;
+            white-space: nowrap !important;
+        }
+
+        .cta-btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+            transform: skewX(-20deg);
+            animation: sheen 3.5s infinite ease-in-out;
+        }
+
+        @keyframes sheen {
+            0% { left: -100%; }
+            18% { left: 120%; }
+            100% { left: 120%; }
+        }
+
+        .tg-round-ic {
+            width: 32px;
+            height: 32px;
+            background: #229ed9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            flex-shrink: 0;
+        }
+        .tg-round-ic svg {
+            width: 16px;
+            height: 16px;
+            fill: #ffffff;
+            margin-right: 1px;
+        }
+
+        .note-text {
+            margin-top: 16px;
+            font-size: 11.5px;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        .managed-by-pill {
+            margin-top: 28px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px 6px 6px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 700;
+            background: rgba(18, 12, 28, 0.85);
+            color: rgba(240, 230, 255, 0.7);
+            border: 1px solid rgba(229, 179, 56, 0.25);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+        .managed-by-pill:hover {
+            border-color: rgba(229, 179, 56, 0.6);
+            transform: translateY(-1px);
+        }
+        .managed-by-pill b {
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        .aj-logo-svg {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #ffffff;
+            display: block;
+            flex-shrink: 0;
+            padding: 2px;
+        }
+
+        #modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 9999;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .modal-body {
+            background: #140d22;
+            width: 100%;
+            max-width: 440px;
+            border-top-left-radius: 26px;
+            border-top-right-radius: 26px;
+            border-top: 1px solid rgba(229, 179, 56, 0.35);
+            padding: 24px 20px;
+            text-align: center;
+        }
+
+        .modal-title {
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: #fff;
+        }
+
+        .modal-desc {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .modal-action {
+            display: block;
+            width: 100%;
+            padding: 15px 0;
+            border-radius: 14px;
+            font-size: 14.5px;
+            font-weight: 800;
+            text-decoration: none;
+            margin-bottom: 9px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-open-app {
+            background: linear-gradient(180deg, var(--gold-light), var(--gold-mid));
+            color: #0b0614;
+        }
+
+        .btn-copy-link {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-bg"></div>
+
+    <div class="page-card">
+        <div class="diamond-wrap">
+            <div class="diamond-frame">
+                <div class="diamond-inner">
+                    <img src="https://i.ibb.co/fYbKktD8/image.jpg" alt="Rana Ji" class="avatar-img">
+                </div>
+            </div>
+            <div class="verified-badge">
+                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            </div>
+        </div>
+
+        <div class="crown-tag">👑</div>
+        <h1 class="channel-name">RANA JI</h1>
+        <div class="sub-counter">Official VIP Telegram Channel</div>
+
+        <div class="features-box">
+            <div class="feature-item"><span>⚡</span> 100% Accurate Match Reports</div>
+            <div class="feature-item"><span>⚡</span> Real-Time Session & Toss Insights</div>
+            <div class="feature-item"><span>⚡</span> Daily Premium Cricket Calls</div>
+        </div>
+
+        <div class="cta-wrap">
+            <button class="cta-btn" id="join-btn">
+                <span class="tg-round-ic">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-1-.65-.35-1 .22-1.62.15-.15 2.71-2.48 2.76-2.7.01-.03.01-.14-.05-.2-.06-.06-.14-.04-.2-.03-.08.01-1.29.82-3.65 2.42-.35.24-.66.36-.94.35-.31-.01-.91-.18-1.36-.32-.55-.18-1-.28-.96-.59.02-.16.24-.33.66-.51 2.58-1.12 4.31-1.87 5.17-2.23 2.46-1 2.97-1.17 3.31-1.18.07 0 .24.02.35.11.09.08.12.18.13.26 0 .05.01.18 0 .27z"/>
+                    </svg>
+                </span>
+                <span class="cta-btn-text">JOIN TELEGRAM</span>
+            </button>
+        </div>
+
+        <p class="note-text">Free · Opens Directly in Telegram App</p>
+
+        <a class="managed-by-pill" href="https://t.me/+LlCfsKTU90s1YWI1" target="_blank" rel="noopener">
+            <svg class="aj-logo-svg" viewBox="0 0 100 100" fill="none">
+                <defs>
+                    <linearGradient id="ajBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#00bcd4"/>
+                        <stop offset="100%" stop-color="#0066cc"/>
+                    </linearGradient>
+                    <linearGradient id="ajGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#00e676"/>
+                        <stop offset="100%" stop-color="#008a3d"/>
+                    </linearGradient>
+                </defs>
+                <polygon points="12,78 34,78 52,22 36,22" fill="url(#ajBlue)"/>
+                <polygon points="28,78 44,78 62,22 48,22" fill="url(#ajBlue)"/>
+                <polygon points="56,18 68,18 88,78 50,66 70,58" fill="url(#ajGreen)"/>
+            </svg>
+            Managed by <b>AJ</b>
+        </a>
+    </div>
+
+    <!-- Fallback Modal -->
+    <div id="modal-overlay">
+        <div class="modal-body">
+            <div class="modal-title">Telegram Didn't Open?</div>
+            <div class="modal-desc">Tap below to join directly or copy the invite link.</div>
+            <a id="modal-app-link" class="modal-action btn-open-app" href="#">Open in Telegram</a>
+            <button id="modal-copy-btn" class="modal-action btn-copy-link">Copy Invite Link</button>
+        </div>
+    </div>
+
+    <script>
+        const CONFIG = {
+            pixelId: "1134229419200251",
+            channelSlug: "fd5gbE2gKFw2ZGI1",
+            webFallback: "https://t.me/+fd5gbE2gKFw2ZGI1"
+        };
+
+        const pageLoadTs = Date.now();
+        let pixelActive = false;
+        let humanConfirmed = false;
+
+        function confirmHumanActivity(e) {
+            if (e && e.isTrusted === false) return;
+            humanConfirmed = true;
+            loadPixelOnce();
+        }
+
+        window.addEventListener('touchstart', confirmHumanActivity, { passive: true, once: true });
+        window.addEventListener('pointerdown', confirmHumanActivity, { passive: true, once: true });
+        window.addEventListener('scroll', confirmHumanActivity, { passive: true, once: true });
+
+        function loadPixelOnce() {
+            if (pixelActive) return;
+            pixelActive = true;
+
+            !function(f,b,e,v,n,t,s) {
+                if(f.fbq) return;
+                n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t,s);
+            }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+
+            fbq('init', CONFIG.pixelId);
+            fbq('track', 'PageView');
+        }
+
+        (function scrubParams() {
+            try {
+                if (!window.history || !history.replaceState || !window.URL) return;
+                const u = new URL(window.location.href);
+                const stripList = ["utm_source","utm_medium","utm_campaign","utm_term","utm_content","fbclid","gclid","ad_id","campaign_id","adset_id"];
+                let touched = false;
+                stripList.forEach(k => {
+                    if (u.searchParams.has(k)) {
+                        u.searchParams.delete(k);
+                        touched = true;
+                    }
+                });
+                if (touched) history.replaceState(null, document.title, u.pathname + u.hash);
+            } catch(e) {}
+        })();
+
+        const joinBtn = document.getElementById('join-btn');
+        const overlay = document.getElementById('modal-overlay');
+        const modalAppLink = document.getElementById('modal-app-link');
+        const modalCopyBtn = document.getElementById('modal-copy-btn');
+
+        joinBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            if (!e.isTrusted) return;
+
+            const dwellTime = Date.now() - pageLoadTs;
+            const validHumanClick = dwellTime >= 800 && humanConfirmed;
+
+            if (validHumanClick) {
+                if (typeof fbq === 'function') {
+                    fbq('track', 'Subscribe');
+                } else {
+                    new Image().src = `https://www.facebook.com/tr?id=${CONFIG.pixelId}&ev=Subscribe&noscript=1`;
+                }
+            }
+
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+            const tgAppProtocol = `tg://join?invite=${CONFIG.channelSlug}`;
+
+            if (isMobile) {
+                const clickTime = Date.now();
+                let switchedAway = false;
+
+                const onVis = function() {
+                    if (document.hidden) switchedAway = true;
+                };
+                document.addEventListener('visibilitychange', onVis, { once: true });
+
+                window.location.href = tgAppProtocol;
+
+                setTimeout(() => {
+                    document.removeEventListener('visibilitychange', onVis);
+                    if (!switchedAway && !document.hidden && (Date.now() - clickTime < 3500)) {
+                        modalAppLink.href = CONFIG.webFallback;
+                        overlay.style.display = 'flex';
+                    }
+                }, 2000);
+            } else {
+                window.location.href = CONFIG.webFallback;
+            }
+        });
+
+        modalCopyBtn.addEventListener('click', function() {
+            navigator.clipboard.writeText(CONFIG.webFallback).then(() => {
+                this.textContent = "Copied to Clipboard!";
+                setTimeout(() => { this.textContent = "Copy Invite Link"; }, 2000);
+            }).catch(() => {
+                window.location.href = CONFIG.webFallback;
+            });
+        });
+
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) overlay.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
