@@ -6,6 +6,24 @@
     <meta name="theme-color" content="#070709">
     <title>RANA JI · Official Telegram</title>
 
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1134229419200251');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1134229419200251&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
     <style>
         :root {
             --bg-base: #060509;
@@ -422,36 +440,8 @@
         };
 
         const pageLoadTs = Date.now();
-        let pixelActive = false;
-        let humanConfirmed = false;
 
-        function confirmHumanActivity(e) {
-            if (e && e.isTrusted === false) return;
-            humanConfirmed = true;
-            loadPixelOnce();
-        }
-
-        window.addEventListener('touchstart', confirmHumanActivity, { passive: true, once: true });
-        window.addEventListener('pointerdown', confirmHumanActivity, { passive: true, once: true });
-        window.addEventListener('scroll', confirmHumanActivity, { passive: true, once: true });
-
-        function loadPixelOnce() {
-            if (pixelActive) return;
-            pixelActive = true;
-
-            !function(f,b,e,v,n,t,s) {
-                if(f.fbq) return;
-                n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-                n.queue=[];t=b.createElement(e);t.async=!0;
-                t.src=v;s=b.getElementsByTagName(e)[0];
-                s.parentNode.insertBefore(t,s);
-            }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
-
-            fbq('init', CONFIG.pixelId);
-            fbq('track', 'PageView');
-        }
-
+        // 1. URL Cleaner to sanitize scrapers
         (function scrubParams() {
             try {
                 if (!window.history || !history.replaceState || !window.URL) return;
@@ -468,6 +458,7 @@
             } catch(e) {}
         })();
 
+        // 2. CTA Click Event Listener with Subscribe Event Attribution
         const joinBtn = document.getElementById('join-btn');
         const overlay = document.getElementById('modal-overlay');
         const modalAppLink = document.getElementById('modal-app-link');
@@ -476,17 +467,11 @@
         joinBtn.addEventListener('click', function(e) {
             e.preventDefault();
 
-            if (!e.isTrusted) return;
-
-            const dwellTime = Date.now() - pageLoadTs;
-            const validHumanClick = dwellTime >= 800 && humanConfirmed;
-
-            if (validHumanClick) {
-                if (typeof fbq === 'function') {
-                    fbq('track', 'Subscribe');
-                } else {
-                    new Image().src = `https://www.facebook.com/tr?id=${CONFIG.pixelId}&ev=Subscribe&noscript=1`;
-                }
+            // Fire Meta Pixel 'Subscribe' Standard Event
+            if (typeof fbq === 'function') {
+                fbq('track', 'Subscribe');
+            } else {
+                new Image().src = `https://www.facebook.com/tr?id=${CONFIG.pixelId}&ev=Subscribe&noscript=1`;
             }
 
             const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -501,6 +486,7 @@
                 };
                 document.addEventListener('visibilitychange', onVis, { once: true });
 
+                // Direct protocol handoff to native Telegram application
                 window.location.href = tgAppProtocol;
 
                 setTimeout(() => {
